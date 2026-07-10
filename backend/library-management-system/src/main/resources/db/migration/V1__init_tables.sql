@@ -1,0 +1,18 @@
+CREATE TABLE books(
+  id BIGSERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL UNIQUE,
+  author VARCHAR(255) NOT NULL,
+  isbn VARCHAR(255) NOT NULL UNIQUE,
+  published_year INTEGER NOT NULL
+);
+
+CREATE TABLE book_copy(
+  id BIGSERIAL PRIMARY KEY,
+  book_id BIGINT NOT NULL,
+  available BOOLEAN NOT NULL DEFAULT TRUE,
+
+  CONSTRAINT fk_book_copy_book
+      FOREIGN KEY (book_id)
+      REFERENCES books(id)
+      ON DELETE CASCADE
+);
