@@ -55,13 +55,13 @@ public class BookMapper {
       book.setTitle(request.title());
     }
     if (request.author() != null) {
-      book.setTitle(request.author());
+      book.setAuthor(request.author());
     }
     if (request.isbn() != null) {
-      book.setTitle(request.isbn());
+      book.setIsbn(request.isbn());
     }
     if (request.publishedYear() != null) {
-      book.setTitle(String.valueOf(request.publishedYear()));
+      book.setPublishedYear(Integer.valueOf(String.valueOf(request.publishedYear())));
     }
   }
 

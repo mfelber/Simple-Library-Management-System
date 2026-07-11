@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Library</title>
+</head>
+
+<body>
+
+<h1>Library Management System</h1>
+
+<div th:each="book : ${books}">
+
+  <h2 th:text="${book.title}"></h2>
+
+  <p>
+    Author:
+    <span th:text="${book.author}"></span>
+  </p>
+
+  <p>
+    ISBN:
+    <span th:text="${book.isbn}"></span>
+  </p>
+
+  <p>
+    Published:
+    <span th:text="${book.publishedYear}"></span>
+  </p>
+
+  <h3 th:if="${book.copies.size() > 0}">Copies</h3>
+
+  <ul th:if="${book.copies.size() > 0}">
+
+    <li th:each="copy : ${book.copies}">
+
+      ID:
+      <span th:text="${copy.id}"></span> - <span th:if="${copy.available}"> Available </span>
+
+      <span th:unless="${copy.available}"> Not Available </span>
+
+    </li>
+
+  </ul>
+
+  <hr>
+</div>
+
+</body>
+</html>
