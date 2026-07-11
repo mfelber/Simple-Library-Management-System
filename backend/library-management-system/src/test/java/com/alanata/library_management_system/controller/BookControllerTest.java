@@ -54,11 +54,11 @@ public class BookControllerTest {
 
     mockMvc.perform(get("/api/books"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].id").value(1))
-        .andExpect(jsonPath("$[0].title").value("test"))
-        .andExpect(jsonPath("$[0].author").value("Martin S."))
-        .andExpect(jsonPath("$[0].isbn").value("978-0132350884"))
-        .andExpect(jsonPath("$[0].publishedYear").value(2002));
+        .andExpect(jsonPath("$.content[0].id").value(1))
+        .andExpect(jsonPath("$.content[0].title").value("test"))
+        .andExpect(jsonPath("$.content[0].author").value("Martin S."))
+        .andExpect(jsonPath("$.content[0].isbn").value("978-0132350884"))
+        .andExpect(jsonPath("$.content[0].publishedYear").value(2002));
 
     verify(bookService).getBooks(any(Pageable.class));
   }
