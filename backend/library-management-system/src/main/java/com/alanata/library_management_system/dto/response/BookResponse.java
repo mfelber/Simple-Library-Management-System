@@ -9,5 +9,6 @@ public record BookResponse(
     String author,
     String isbn,
     Integer publishedYear
-){
+) {
+
 }

@@ -1,6 +1,5 @@
 package com.alanata.library_management_system.model;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +48,5 @@ public class Book {
       orphanRemoval = true
   )
   private List<BookCopy> copies = new ArrayList<>();
-
 
 }

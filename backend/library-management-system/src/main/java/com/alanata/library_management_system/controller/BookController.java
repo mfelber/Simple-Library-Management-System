@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alanata.library_management_system.dto.request.CreateBookRequest;
@@ -28,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/books")
-public class LibraryController {
+public class BookController {
 
   private final BookService bookService;
 
@@ -76,4 +75,5 @@ public class LibraryController {
       UpdateBookCopyRequest request) {
     return bookService.updateAvailability(id, copyId, request);
   }
+
 }

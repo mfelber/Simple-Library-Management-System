@@ -27,5 +27,4 @@ public interface BookService {
 
   BookCopyResponse updateAvailability(Long bookId, Long copyId, UpdateBookCopyRequest request);
 
-
 }
