@@ -28,4 +28,10 @@ public class GlobalExceptionHandler {
             .toList()));
   }
 
+  @ExceptionHandler(ResourceAlreadyExistsException.class)
+  public ResponseEntity<?> handleResourceAlreadyExists(ResourceAlreadyExistsException ex) {
+    return ResponseEntity.status(HttpStatus.CONFLICT)
+        .body(Map.of("timestamp", LocalDateTime.now(), "status", 409, "message", ex.getMessage()));
+  }
+
 }

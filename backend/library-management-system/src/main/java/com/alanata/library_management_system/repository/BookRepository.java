@@ -6,4 +6,8 @@ import com.alanata.library_management_system.model.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
+  boolean existsBookByIsbn(String isbn);
+
+  boolean existsBookByTitle(String title);
+
 }

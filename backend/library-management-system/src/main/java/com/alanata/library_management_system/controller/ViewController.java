@@ -27,7 +27,6 @@ public class ViewController {
             .map(book -> bookService.findById(book.id()))
             .toList();
 
-
     model.addAttribute("books", books);
 
     return "index";

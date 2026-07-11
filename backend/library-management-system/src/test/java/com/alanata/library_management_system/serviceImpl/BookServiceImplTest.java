@@ -46,13 +46,8 @@ public class BookServiceImplTest {
 
   @Test
   void shouldReturnAllBooks() {
-    Book book = Book.builder()
-        .Id(1L)
-        .title("test")
-        .author("Martin S.")
-        .isbn("978-0132350884")
-        .publishedYear(2002)
-        .build();
+
+    Book book = createBook();
 
     BookResponse response = BookResponse.builder()
         .id(1L)
@@ -79,13 +74,7 @@ public class BookServiceImplTest {
   @Test
   void shouldReturnBookById() {
 
-    Book book = Book.builder()
-        .Id(1L)
-        .title("test")
-        .author("Martin S.")
-        .isbn("978-0132350884")
-        .publishedYear(2002)
-        .build();
+    Book book = createBook();
 
     BookDetailResponse response = BookDetailResponse.builder()
         .id(1L)
@@ -112,13 +101,8 @@ public class BookServiceImplTest {
 
   @Test
   void shouldDeleteBook() {
-    Book book = Book.builder()
-        .Id(1L)
-        .title("test")
-        .author("Martin S.")
-        .isbn("978-0132350884")
-        .publishedYear(2002)
-        .build();
+
+    Book book = createBook();
 
     when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
 
@@ -129,13 +113,8 @@ public class BookServiceImplTest {
 
   @Test
   void shouldAddCopy() {
-    Book book = Book.builder()
-        .Id(1L)
-        .title("test")
-        .author("Martin S.")
-        .isbn("978-0132350884")
-        .publishedYear(2002)
-        .build();
+
+    Book book = createBook();
 
     BookCopy copy = BookCopy.builder().Id(1L).book(book).available(true).build();
 
@@ -154,13 +133,8 @@ public class BookServiceImplTest {
 
   @Test
   void shouldUpdateBookCopyAvailability() {
-    Book book = Book.builder()
-        .Id(1L)
-        .title("test")
-        .author("Martin S.")
-        .isbn("978-0132350884")
-        .publishedYear(2002)
-        .build();
+
+    Book book = createBook();
 
     BookCopy copy = BookCopy.builder().Id(5L).book(book).available(true).build();
 
@@ -178,6 +152,16 @@ public class BookServiceImplTest {
     assertFalse(result.available());
 
     verify(bookCopyRepository).save(copy);
+  }
+
+  private Book createBook() {
+    return Book.builder()
+        .Id(1L)
+        .title("test")
+        .author("Martin S.")
+        .isbn("978-0132350884")
+        .publishedYear(2002)
+        .build();
   }
 
 }

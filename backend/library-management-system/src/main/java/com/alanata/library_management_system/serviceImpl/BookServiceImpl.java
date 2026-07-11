@@ -12,6 +12,7 @@ import com.alanata.library_management_system.dto.request.UpdateBookRequest;
 import com.alanata.library_management_system.dto.response.BookCopyResponse;
 import com.alanata.library_management_system.dto.response.BookDetailResponse;
 import com.alanata.library_management_system.dto.response.BookResponse;
+import com.alanata.library_management_system.exception.ResourceAlreadyExistsException;
 import com.alanata.library_management_system.exception.ResourceNotFoundException;
 import com.alanata.library_management_system.mapper.BookMapper;
 import com.alanata.library_management_system.model.Book;
@@ -40,6 +41,12 @@ public class BookServiceImpl implements BookService {
   @Override
   public BookResponse createBook(final CreateBookRequest request) {
     Book book = bookMapper.toEntity(request);
+    if (bookRepository.existsBookByIsbn(request.isbn())) {
+      throw new ResourceAlreadyExistsException("Book with ISBN '" + request.isbn() + "' already exists.");
+    }
+    if (bookRepository.existsBookByTitle(request.title())) {
+      throw new ResourceAlreadyExistsException("Book with title '" + request.title() + "' already exists.");
+    }
     Book savedBook = bookRepository.save(book);
     return bookMapper.toResponse(savedBook);
   }
@@ -55,6 +62,12 @@ public class BookServiceImpl implements BookService {
   public BookResponse updateBook(final Long bookId, UpdateBookRequest request) {
     Book book = bookRepository.findById(bookId)
         .orElseThrow(() -> new ResourceNotFoundException("Book with id: " + bookId + " was not found"));
+    if (bookRepository.existsBookByIsbn(request.isbn())) {
+      throw new ResourceAlreadyExistsException("Book with ISBN '" + request.isbn() + "' already exists.");
+    }
+    if (bookRepository.existsBookByTitle(request.title())) {
+      throw new ResourceAlreadyExistsException("Book with title '" + request.title() + "' already exists.");
+    }
     bookMapper.update(book, request);
     bookRepository.save(book);
     return bookMapper.toResponse(book);
