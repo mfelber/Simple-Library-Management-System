@@ -2,6 +2,8 @@ package com.alanata.library_management_system.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.alanata.library_management_system.dto.request.CreateBookRequest;
@@ -31,8 +33,8 @@ public class BookServiceImpl implements BookService {
   private final BookCopyRepository bookCopyRepository;
 
   @Override
-  public List<BookResponse> getBooks() {
-    return bookRepository.findAll().stream().map(bookMapper::toResponse).toList();
+  public Page<BookResponse> getBooks(Pageable pageable) {
+    return bookRepository.findAll(pageable).map(bookMapper::toResponse);
   }
 
   @Override

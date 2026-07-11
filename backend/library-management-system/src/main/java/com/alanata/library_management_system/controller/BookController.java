@@ -2,6 +2,9 @@ package com.alanata.library_management_system.controller;
 
 import java.util.List;
 
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +35,8 @@ public class BookController {
   private final BookService bookService;
 
   @GetMapping
-  public List<BookResponse> getBooks() {
-    return bookService.getBooks();
+  public Page<BookResponse> getBooks(@ParameterObject Pageable pageable) {
+    return bookService.getBooks(pageable);
   }
 
   @GetMapping("/{id}")

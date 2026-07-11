@@ -11,6 +11,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -45,7 +48,9 @@ public class BookControllerTest {
         .publishedYear(2002)
         .build();
 
-    when(bookService.getBooks()).thenReturn(List.of(response));
+    Page<BookResponse> page = new PageImpl<>(List.of(response));
+
+    when(bookService.getBooks(any(Pageable.class))).thenReturn(page);
 
     mockMvc.perform(get("/api/books"))
         .andExpect(status().isOk())
@@ -55,7 +60,7 @@ public class BookControllerTest {
         .andExpect(jsonPath("$[0].isbn").value("978-0132350884"))
         .andExpect(jsonPath("$[0].publishedYear").value(2002));
 
-    verify(bookService).getBooks();
+    verify(bookService).getBooks(any(Pageable.class));
   }
 
   @Test

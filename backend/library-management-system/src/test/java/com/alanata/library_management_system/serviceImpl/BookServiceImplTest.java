@@ -13,6 +13,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.alanata.library_management_system.dto.request.UpdateBookCopyRequest;
 import com.alanata.library_management_system.dto.response.BookCopyResponse;
@@ -58,15 +62,18 @@ public class BookServiceImplTest {
         .publishedYear(2002)
         .build();
 
-    when(bookRepository.findAll()).thenReturn(List.of(book));
+    Pageable pageable = PageRequest.of(0, 10);
+
+    when(bookRepository.findAll(pageable)).thenReturn(new PageImpl<>(List.of(book)));
     when(bookMapper.toResponse(book)).thenReturn(response);
 
-    List<BookResponse> result = bookService.getBooks();
+    Page<BookResponse> result = bookService.getBooks(pageable);
 
-    assertEquals(1, result.size());
-    assertEquals("test", result.get(0).title());
+    assertEquals(1, result.getContent().size());
+    assertEquals("test", result.getContent().get(0).title());
 
-    verify(bookRepository).findAll();
+    verify(bookRepository).findAll(pageable);
+    verify(bookMapper).toResponse(book);
   }
 
   @Test
@@ -168,7 +175,7 @@ public class BookServiceImplTest {
 
     BookCopyResponse result = bookService.updateAvailability(1l, 5L, request);
 
-    assertFalse(request.available());
+    assertFalse(result.available());
 
     verify(bookCopyRepository).save(copy);
   }
